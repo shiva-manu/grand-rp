@@ -354,5 +354,3 @@ export function PhotoVerse({
 
   return <div ref={mountRef} className="w-full h-full" />;
 }
-
-    
