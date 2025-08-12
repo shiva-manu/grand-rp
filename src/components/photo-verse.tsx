@@ -45,7 +45,7 @@ export function PhotoVerse({
     scene.background = new THREE.Color(0x000000);
 
     const camera = new THREE.PerspectiveCamera(75, currentMount.clientWidth / currentMount.clientHeight, 0.1, 2000);
-    camera.position.z = 20;
+    camera.position.z = 25; // Adjusted initial camera position
     cameraRef.current = camera;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
@@ -202,26 +202,33 @@ export function PhotoVerse({
       const mesh = photoMeshes.current.get(focusedPhoto.url);
       if (!mesh) return;
       
-      if (!animationState.isFocusing) {
-        animationState.savedCameraPos.copy(camera.position);
-        animationState.savedControlsTarget.copy(controls.target);
+      const isNewFocus = animationState.controlsTargetPos.distanceTo(new THREE.Vector3()) === 0 || 
+                         animationState.controlsTargetPos.distanceTo(mesh.position) > 0.1;
+
+      if (isNewFocus) {
+          animationState.savedCameraPos.copy(camera.position);
+          animationState.savedControlsTarget.copy(controls.target);
       }
       
       controls.enabled = false;
       const meshPosition = new THREE.Vector3();
       mesh.getWorldPosition(meshPosition);
       
-      const offset = new THREE.Vector3(0, 0, 6);
+      const offset = new THREE.Vector3(0, 0, 8); // Increased offset for a better view
       offset.applyQuaternion(mesh.quaternion);
       animationState.cameraTargetPos.copy(meshPosition).add(offset);
       animationState.controlsTargetPos.copy(meshPosition);
       animationState.isFocusing = true;
     } else {
         controls.enabled = true;
-        if(animationState.savedCameraPos.length() > 0) {
+        if(animationState.savedCameraPos.length() > 0.1) { // Check if it's not a zero vector
           animationState.cameraTargetPos.copy(animationState.savedCameraPos);
           animationState.controlsTargetPos.copy(animationState.savedControlsTarget);
           animationState.isFocusing = true;
+          
+          // Clear saved positions after starting to unfocus
+          animationState.savedCameraPos.set(0,0,0);
+          animationState.savedControlsTarget.set(0,0,0);
         }
     }
   }, [focusedPhoto, animationState]);
