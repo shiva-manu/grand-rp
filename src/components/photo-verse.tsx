@@ -4,6 +4,7 @@
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { Photo } from "@/types";
 
 type PhotoVerseProps = {
@@ -25,8 +26,10 @@ export function PhotoVerse({
   const photoMeshes = useRef<Map<string, THREE.Mesh>>(new Map());
   const starFieldRef = useRef<THREE.Points>();
   const moonRef = useRef<THREE.Mesh>();
-  const boyRef = useRef<THREE.Mesh>();
-  const girlRef = useRef<THREE.Mesh>();
+  
+  const boyRef = useRef<{ model?: THREE.Group, mixer?: THREE.AnimationMixer }>({});
+  const girlRef = useRef<{ model?: THREE.Group, mixer?: THREE.AnimationMixer }>({});
+
   const animationState = useRef({
     isFocusing: false,
     cameraTargetPos: new THREE.Vector3(),
@@ -39,6 +42,7 @@ export function PhotoVerse({
   onPhotoClickRef.current = onPhotoClick;
   const photosRef = useRef(photos);
   photosRef.current = photos;
+  const clock = useRef(new THREE.Clock());
 
   const createTextSprite = (text: string) => {
     const canvas = document.createElement('canvas');
@@ -116,29 +120,51 @@ export function PhotoVerse({
 
     const moonLight = new THREE.PointLight(0xffffff, 10.5, 300);
     moon.add(moonLight);
-
+    
+    // Character Loader
+    const gltfLoader = new GLTFLoader();
+    
     // Boy - Shivamani Nika
-    const boyGeometry = new THREE.CapsuleGeometry(1.5, 4, 8, 16);
-    const boyMaterial = new THREE.MeshStandardMaterial({ color: 0xaaaaff });
-    const boy = new THREE.Mesh(boyGeometry, boyMaterial);
-    boy.position.set(-30, 0, 0);
-    scene.add(boy);
-    boyRef.current = boy;
-    const boyName = createTextSprite("Shivamani Nika");
-    boyName.position.set(-30, 6, 0);
-    scene.add(boyName);
+    gltfLoader.load('https://models.readyplayer.me/65823521b711756598586411.glb', (gltf) => {
+        const model = gltf.scene;
+        model.position.set(-30, -4, 0);
+        model.scale.set(2.5, 2.5, 2.5);
+        scene.add(model);
+        boyRef.current.model = model;
 
+        const mixer = new THREE.AnimationMixer(model);
+        const clip = THREE.AnimationClip.findByName(gltf.animations, 'idle');
+        if (clip) {
+          const action = mixer.clipAction(clip);
+          action.play();
+        }
+        boyRef.current.mixer = mixer;
+
+        const boyName = createTextSprite("Shivamani Nika");
+        boyName.position.set(-30, 6, 0);
+        scene.add(boyName);
+    });
+    
     // Girl - Nova Nila
-    const girlGeometry = new THREE.CapsuleGeometry(1.5, 4, 8, 16);
-    const girlMaterial = new THREE.MeshStandardMaterial({ color: 0xffaaaa });
-    const girl = new THREE.Mesh(girlGeometry, girlMaterial);
-    girl.position.set(30, 0, 0);
-    scene.add(girl);
-    girlRef.current = girl;
-    const girlName = createTextSprite("Nova Nila");
-    girlName.position.set(30, 6, 0);
-    scene.add(girlName);
-
+    gltfLoader.load('https://models.readyplayer.me/65823483b71175659858634c.glb', (gltf) => {
+        const model = gltf.scene;
+        model.position.set(30, -4, 0);
+        model.scale.set(2.5, 2.5, 2.5);
+        scene.add(model);
+        girlRef.current.model = model;
+        
+        const mixer = new THREE.AnimationMixer(model);
+        const clip = THREE.AnimationClip.findByName(gltf.animations, 'idle');
+        if (clip) {
+          const action = mixer.clipAction(clip);
+          action.play();
+        }
+        girlRef.current.mixer = mixer;
+        
+        const girlName = createTextSprite("Nova Nila");
+        girlName.position.set(30, 6, 0);
+        scene.add(girlName);
+    });
 
     // Starfield
     const starsGeometry = new THREE.BufferGeometry();
@@ -175,6 +201,7 @@ export function PhotoVerse({
     let animationFrameId: number;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
+      const delta = clock.current.getDelta();
       controls.update();
 
       if(starFieldRef.current) {
@@ -185,11 +212,15 @@ export function PhotoVerse({
       if(moonRef.current) {
         moonRef.current.rotation.y += 0.0005;
       }
-
-      if(boyRef.current && girlRef.current) {
-        boyRef.current.lookAt(girlRef.current.position);
-        girlRef.current.lookAt(boyRef.current.position);
+      
+      if (boyRef.current.model && girlRef.current.model) {
+        boyRef.current.model.lookAt(girlRef.current.model.position);
+        girlRef.current.model.lookAt(boyRef.current.model.position);
       }
+      
+      if (boyRef.current.mixer) boyRef.current.mixer.update(delta);
+      if (girlRef.current.mixer) girlRef.current.mixer.update(delta);
+
 
       photosRef.current.forEach(photo => {
         const mesh = photoMeshes.current.get(photo.url);
