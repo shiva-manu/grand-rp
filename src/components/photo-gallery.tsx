@@ -1,19 +1,12 @@
 "use client";
 
 import React, { useState, useTransition } from "react";
-import {
-  SidebarProvider,
-  Sidebar,
-  SidebarHeader,
-  SidebarContent,
-  SidebarInset,
-} from "@/components/ui/sidebar";
 import { PhotoVerse } from "@/components/photo-verse";
 import { getArrangementSuggestion } from "@/app/actions";
 import { useToast } from "@/hooks/use-toast";
 import type { Photo } from "@/types";
 import { Button } from "@/components/ui/button";
-import { X, Wand2 } from "lucide-react";
+import { X } from "lucide-react";
 
 const photosData = [
   { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "couple smiling" },
@@ -105,37 +98,23 @@ export function PhotoGallery() {
   };
 
   return (
-    <SidebarProvider>
-      <Sidebar>
-        <SidebarHeader>
-          <div className="flex items-center gap-2 p-2">
-            <Wand2 className="text-primary" />
-            <h1 className="text-xl font-semibold">PhotoVerse 3D</h1>
-          </div>
-        </SidebarHeader>
-        <SidebarContent>
-        </SidebarContent>
-      </Sidebar>
-      <SidebarInset>
-        <div className="relative w-full h-screen bg-background">
-          <PhotoVerse
-            photos={photos}
-            onPhotoClick={(photo) => setFocusedPhoto(photo === focusedPhoto ? null : photo)}
-            focusedPhoto={focusedPhoto}
-          />
-          {focusedPhoto && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute top-4 right-4 z-30 text-white hover:text-white hover:bg-white/20"
-              onClick={() => setFocusedPhoto(null)}
-            >
-              <X className="w-6 h-6" />
-              <span className="sr-only">Close fullscreen view</span>
-            </Button>
-          )}
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+    <div className="relative w-full h-screen bg-background">
+      <PhotoVerse
+        photos={photos}
+        onPhotoClick={(photo) => setFocusedPhoto(photo === focusedPhoto ? null : photo)}
+        focusedPhoto={focusedPhoto}
+      />
+      {focusedPhoto && (
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute top-4 right-4 z-30 text-white hover:text-white hover:bg-white/20"
+          onClick={() => setFocusedPhoto(null)}
+        >
+          <X className="w-6 h-6" />
+          <span className="sr-only">Close fullscreen view</span>
+        </Button>
+      )}
+    </div>
   );
 }
