@@ -8,21 +8,21 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
 const photosData = [
-  { url: '/photos/1.png', 'data-ai-hint': "couple smiling" },
-  { url: '/photos/2.png', 'data-ai-hint': "wedding rings" },
-  { url: '/photos/3.png', 'data-ai-hint': "heart shape" },
-  { url: '/photos/4.png', 'data-ai-hint': "love letter" },
-  { url: '/photos/5.png', 'data-ai-hint': "sunset romance" },
-  { url: '/photos/6.png', 'data-ai-hint': "holding hands" },
-  { url: '/photos/7.png', 'data-ai-hint': "rose petals" },
-  { url: '/photos/8.png', 'data-ai-hint': "romantic dinner" },
-  { url: '/photos/9.png', 'data-ai-hint': "love lock" },
-  { url: '/photos/10.png', 'data-ai-hint': "valentine gift" },
-  { url: '/photos/11.png', 'data-ai-hint': "cupid arrow" },
-  { url: '/photos/12.png', 'data-ai-hint': "chocolate box" },
-  { url: '/photos/13.png', 'data-ai-hint': "paris eiffel" },
-  { url: '/photos/14.png', 'data-ai-hint': "beach walk" },
-  { url: '/photos/15.png', 'data-ai-hint': "picnic blanket" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "couple smiling" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "wedding rings" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "heart shape" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "love letter" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "sunset romance" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "holding hands" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "rose petals" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "romantic dinner" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "love lock" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "valentine gift" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "cupid arrow" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "chocolate box" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "paris eiffel" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "beach walk" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "picnic blanket" },
 ];
 
 const getCircleCoords = (index: number, total: number) => {
@@ -39,7 +39,7 @@ const getCircleCoords = (index: number, total: number) => {
 
 const initialPhotos: Photo[] = photosData.map((p, i) => {
   const { x, y, z, rotationY } = getCircleCoords(i, photosData.length);
-  return { ...p, x, y, z, rotationY };
+  return { ...p, x, y, z, rotationY, photoUrl: p.url };
 });
 
 
