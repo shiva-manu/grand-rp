@@ -25,6 +25,10 @@ const initialPhotos: Photo[] = [
   { url: 'https://placehold.co/500x700.png', 'data-ai-hint': "architecture building" },
   { url: 'https://placehold.co/900x600.png', 'data-ai-hint': "travel destination" },
   { url: 'https://placehold.co/600x800.png', 'data-ai-hint': "fashion model" },
+  { url: 'https://placehold.co/1000x800.png', 'data-ai-hint': "sports action" },
+  { url: 'https://placehold.co/800x1000.png', 'data-ai-hint': "product still" },
+  { url: 'https://placehold.co/800x800.png', 'data-ai-hint': "black white" },
+  { url: 'https://placehold.co/1200x600.png', 'data-ai-hint': "car automotive" },
 ].map(p => ({ ...p, x: (Math.random() - 0.5) * 15, y: (Math.random() - 0.5) * 10, z: (Math.random() - 0.5) * 15, rotationY: (Math.random() - 0.5) * Math.PI }));
 
 
