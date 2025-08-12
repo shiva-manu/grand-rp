@@ -26,7 +26,7 @@ const photosData = [
 ];
 
 const getCircleCoords = (index: number, total: number) => {
-  const radius = 15;
+  const radius = 10;
   const angle = (index / total) * 2 * Math.PI;
 
   const x = radius * Math.cos(angle);
