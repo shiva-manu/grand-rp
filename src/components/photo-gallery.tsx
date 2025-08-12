@@ -13,7 +13,7 @@ const photosData = [
   { url: 'https://ik.imagekit.io/pbk0y1kt4/New%20Folder/Screenshot_20250810-143402.jpg?updatedAt=1754980850351', 'data-ai-hint': "couple smile" },
   { url: 'https://ik.imagekit.io/pbk0y1kt4/New%20Folder/Screenshot_20250730-012837.jpg?updatedAt=1754980837083', 'data-ai-hint': "couple celebrate" },
   { url: 'https://ik.imagekit.io/pbk0y1kt4/New%20Folder/Screenshot_20250730-012633.jpg?updatedAt=1754980822889', 'data-ai-hint': "couple photo" },
-  { url: 'https://placehold.co/600x402.png', 'data-ai-hint': "heart shape" },
+  { url: 'https://ik.imagekit.io/pbk0y1kt4/New%20Folder/Screenshot_20250721-093335.jpg?updatedAt=1754980808860', 'data-ai-hint': "couple nature" },
   { url: 'https://placehold.co/600x403.png', 'data-ai-hint': "love letter" },
   { url: 'https://placehold.co/600x404.png', 'data-ai-hint': "sunset romance" },
   { url: 'https://placehold.co/600x405.png', 'data-ai-hint': "holding hands" },
