@@ -130,7 +130,7 @@ export function PhotoVerse({
       }
       
       if(moonRef.current) {
-        moonRef.current.rotation.y += 0.0005;
+        moonRef.current.rotation.y -= 0.0005;
       }
 
       photosRef.current.forEach(photo => {
