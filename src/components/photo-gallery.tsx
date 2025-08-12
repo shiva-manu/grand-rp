@@ -14,18 +14,6 @@ const photosData = [
   { url: 'https://ik.imagekit.io/pbk0y1kt4/New%20Folder/Screenshot_20250730-012837.jpg?updatedAt=1754980837083', 'data-ai-hint': "couple celebrate" },
   { url: 'https://ik.imagekit.io/pbk0y1kt4/New%20Folder/Screenshot_20250730-012633.jpg?updatedAt=1754980822889', 'data-ai-hint': "couple photo" },
   { url: 'https://ik.imagekit.io/pbk0y1kt4/New%20Folder/Screenshot_20250721-093335.jpg?updatedAt=1754980808860', 'data-ai-hint': "couple nature" },
-  { url: 'https://placehold.co/600x403.png', 'data-ai-hint': "love letter" },
-  { url: 'https://placehold.co/600x404.png', 'data-ai-hint': "sunset romance" },
-  { url: 'https://placehold.co/600x405.png', 'data-ai-hint': "holding hands" },
-  { url: 'https://placehold.co/600x406.png', 'data-ai-hint': "rose petals" },
-  { url: 'https://placehold.co/600x407.png', 'data-ai-hint': "romantic dinner" },
-  { url: 'https://placehold.co/600x408.png', 'data-ai-hint': "love lock" },
-  { url: 'https://placehold.co/600x409.png', 'data-ai-hint': "valentine gift" },
-  { url: 'https://placehold.co/600x410.png', 'data-ai-hint': "cupid arrow" },
-  { url: 'https://placehold.co/600x411.png', 'data-ai-hint': "chocolate box" },
-  { url: 'https://placehold.co/600x412.png', 'data-ai-hint': "paris eiffel" },
-  { url: 'https://placehold.co/600x413.png', 'data-ai-hint': "beach walk" },
-  { url: 'https://placehold.co/600x414.png', 'data-ai-hint': "picnic blanket" },
 ];
 
 const getCircleCoords = (index: number, total: number) => {
