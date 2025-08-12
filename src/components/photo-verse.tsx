@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useRef, useEffect } from "react";
@@ -67,11 +68,11 @@ export function PhotoVerse({
     scene.add(directionalLight);
 
     // Moon
+    const textureLoader = new THREE.TextureLoader();
+    const moonTexture = textureLoader.load('https://www.solarsystemscope.com/textures/download/2k_moon.jpg');
     const moonGeometry = new THREE.SphereGeometry(4, 32, 32);
     const moonMaterial = new THREE.MeshStandardMaterial({
-      color: 0xe0e0e0, 
-      emissive: 0x999999,
-      emissiveIntensity: 0.3,
+      map: moonTexture,
       metalness: 0.2,
       roughness: 0.8,
     });
