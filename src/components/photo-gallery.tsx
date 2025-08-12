@@ -25,26 +25,21 @@ const photosData = [
   { url: 'https://placehold.co/800x600.png', 'data-ai-hint': "picnic blanket" },
 ];
 
-const getGridCoords = (index: number, total: number) => {
-  const numColumns = 5;
-  const colWidth = 5.5;
-  const rowHeight = 5.5;
+const getCircleCoords = (index: number, total: number) => {
+  const radius = 15;
+  const angle = (index / total) * 2 * Math.PI;
 
-  const numRows = Math.ceil(total / numColumns);
-  const row = Math.floor(index / numColumns);
-  const col = index % numColumns;
-
-  // Center the grid
-  const x = (col - (numColumns - 1) / 2) * colWidth;
-  const y = (-(row - (numRows - 1) / 2)) * rowHeight;
-  const z = 0;
+  const x = radius * Math.cos(angle);
+  const z = radius * Math.sin(angle);
+  const y = 0; 
+  const rotationY = -angle + Math.PI / 2;
   
-  return { x, y, z };
+  return { x, y, z, rotationY };
 }
 
 const initialPhotos: Photo[] = photosData.map((p, i) => {
-  const { x, y, z } = getGridCoords(i, photosData.length);
-  return { ...p, x, y, z, rotationY: 0 };
+  const { x, y, z, rotationY } = getCircleCoords(i, photosData.length);
+  return { ...p, x, y, z, rotationY };
 });
 
 
