@@ -17,18 +17,21 @@ import { Button } from "@/components/ui/button";
 import { X, Wand2 } from "lucide-react";
 
 const initialPhotos: Photo[] = [
-  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "nature landscape" },
-  { url: 'https://placehold.co/400x600.png', 'data-ai-hint': "portrait city" },
-  { url: 'https://placehold.co/800x600.png', 'data-ai-hint': "abstract texture" },
-  { url: 'https://placehold.co/600x600.png', 'data-ai-hint': "food photography" },
-  { url: 'https://placehold.co/700x500.png', 'data-ai-hint': "animal pet" },
-  { url: 'https://placehold.co/500x700.png', 'data-ai-hint': "architecture building" },
-  { url: 'https://placehold.co/900x600.png', 'data-ai-hint': "travel destination" },
-  { url: 'https://placehold.co/600x800.png', 'data-ai-hint': "fashion model" },
-  { url: 'https://placehold.co/1000x800.png', 'data-ai-hint': "sports action" },
-  { url: 'https://placehold.co/800x1000.png', 'data-ai-hint': "product still" },
-  { url: 'https://placehold.co/800x800.png', 'data-ai-hint': "black white" },
-  { url: 'https://placehold.co/1200x600.png', 'data-ai-hint': "car automotive" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "couple smiling" },
+  { url: 'https://placehold.co/400x600.png', 'data-ai-hint': "wedding rings" },
+  { url: 'https://placehold.co/800x600.png', 'data-ai-hint': "heart shape" },
+  { url: 'https://placehold.co/600x600.png', 'data-ai-hint': "love letter" },
+  { url: 'https://placehold.co/700x500.png', 'data-ai-hint': "sunset romance" },
+  { url: 'https://placehold.co/500x700.png', 'data-ai-hint': "holding hands" },
+  { url: 'https://placehold.co/900x600.png', 'data-ai-hint': "rose petals" },
+  { url: 'https://placehold.co/600x800.png', 'data-ai-hint': "romantic dinner" },
+  { url: 'https://placehold.co/1000x800.png', 'data-ai-hint': "love lock" },
+  { url: 'https://placehold.co/800x1000.png', 'data-ai-hint': "valentine gift" },
+  { url: 'https://placehold.co/800x800.png', 'data-ai-hint': "cupid arrow" },
+  { url: 'https://placehold.co/1200x600.png', 'data-ai-hint': "chocolate box" },
+  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "paris eiffel" },
+  { url: 'https://placehold.co/400x600.png', 'data-ai-hint': "beach walk" },
+  { url: 'https://placehold.co/800x600.png', 'data-ai-hint': "picnic blanket" },
 ].map(p => ({ ...p, x: (Math.random() - 0.5) * 15, y: (Math.random() - 0.5) * 10, z: (Math.random() - 0.5) * 15, rotationY: (Math.random() - 0.5) * Math.PI }));
 
 
@@ -93,14 +96,6 @@ export function PhotoGallery() {
           </div>
         </SidebarHeader>
         <SidebarContent>
-          <Controls
-            isLoading={isPending}
-            onSuggestArrangement={handleSuggestArrangement}
-            backgroundColor={backgroundColor}
-            onBackgroundColorChange={setBackgroundColor}
-            brightness={brightness}
-            onBrightnessChange={(value) => setBrightness(value[0])}
-          />
         </SidebarContent>
       </Sidebar>
       <SidebarInset>
