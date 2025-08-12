@@ -12,6 +12,7 @@ const photosData = [
   { url: 'https://ik.imagekit.io/pbk0y1kt4/New%20Folder/Screenshot_20250807-050112.jpg?updatedAt=1754980862003', 'data-ai-hint': "couple hug" },
   { url: 'https://ik.imagekit.io/pbk0y1kt4/New%20Folder/Screenshot_20250810-143402.jpg?updatedAt=1754980850351', 'data-ai-hint': "couple smile" },
   { url: 'https://ik.imagekit.io/pbk0y1kt4/New%20Folder/Screenshot_20250730-012837.jpg?updatedAt=1754980837083', 'data-ai-hint': "couple celebrate" },
+  { url: 'https://ik.imagekit.io/pbk0y1kt4/New%20Folder/Screenshot_20250730-012633.jpg?updatedAt=1754980822889', 'data-ai-hint': "couple photo" },
   { url: 'https://placehold.co/600x402.png', 'data-ai-hint': "heart shape" },
   { url: 'https://placehold.co/600x403.png', 'data-ai-hint': "love letter" },
   { url: 'https://placehold.co/600x404.png', 'data-ai-hint': "sunset romance" },
@@ -28,7 +29,7 @@ const photosData = [
 ];
 
 const getCircleCoords = (index: number, total: number) => {
-  const radius = 22;
+  const radius = 24;
   const angle = (index / total) * 2 * Math.PI;
 
   const x = radius * Math.cos(angle);
