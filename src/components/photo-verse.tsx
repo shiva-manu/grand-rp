@@ -60,10 +60,10 @@ export function PhotoVerse({
     controls.enableDamping = true;
     controlsRef.current = controls;
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 2.5);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
     
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.2);
     directionalLight.position.set(5, 10, 7.5);
     scene.add(directionalLight);
 
@@ -75,10 +75,17 @@ export function PhotoVerse({
       map: moonTexture,
       metalness: 0.2,
       roughness: 0.8,
+      emissive: 0xffffff,
+      emissiveMap: moonTexture,
+      emissiveIntensity: 0.8
     });
     const moon = new THREE.Mesh(moonGeometry, moonMaterial);
     scene.add(moon);
     moonRef.current = moon;
+
+    const moonLight = new THREE.PointLight(0xffffff, 3.5, 200);
+    moon.add(moonLight);
+
 
     // Starfield
     const starsGeometry = new THREE.BufferGeometry();
