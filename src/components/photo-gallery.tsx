@@ -8,7 +8,6 @@ import {
   SidebarContent,
   SidebarInset,
 } from "@/components/ui/sidebar";
-import { Controls } from "@/components/controls";
 import { PhotoVerse } from "@/components/photo-verse";
 import { getArrangementSuggestion } from "@/app/actions";
 import { useToast } from "@/hooks/use-toast";
@@ -16,7 +15,7 @@ import type { Photo } from "@/types";
 import { Button } from "@/components/ui/button";
 import { X, Wand2 } from "lucide-react";
 
-const initialPhotos: Photo[] = [
+const photosData = [
   { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "couple smiling" },
   { url: 'https://placehold.co/400x600.png', 'data-ai-hint': "wedding rings" },
   { url: 'https://placehold.co/800x600.png', 'data-ai-hint': "heart shape" },
@@ -32,7 +31,28 @@ const initialPhotos: Photo[] = [
   { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "paris eiffel" },
   { url: 'https://placehold.co/400x600.png', 'data-ai-hint': "beach walk" },
   { url: 'https://placehold.co/800x600.png', 'data-ai-hint': "picnic blanket" },
-].map(p => ({ ...p, x: (Math.random() - 0.5) * 15, y: (Math.random() - 0.5) * 10, z: (Math.random() - 0.5) * 15, rotationY: (Math.random() - 0.5) * Math.PI }));
+];
+
+const getSphericalCoords = (index: number, total: number, radius: number) => {
+  const phi = Math.acos(-1 + (2 * index) / total);
+  const theta = Math.sqrt(total * Math.PI) * phi;
+
+  const x = radius * Math.cos(theta) * Math.sin(phi);
+  const y = radius * Math.sin(theta) * Math.sin(phi);
+  const z = radius * Math.cos(phi);
+  
+  return { x, y, z };
+}
+
+const initialPhotos: Photo[] = photosData.map((p, i) => {
+  const radius = 10;
+  const { x, y, z } = getSphericalCoords(i, photosData.length, radius);
+  
+  // Orient the photo to face the center
+  const rotationY = Math.atan2(x, z);
+  
+  return { ...p, x, y, z, rotationY };
+});
 
 
 export function PhotoGallery() {
