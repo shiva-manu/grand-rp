@@ -10,19 +10,11 @@ import { Separator } from "./ui/separator";
 type ControlsProps = {
   isLoading: boolean;
   onSuggestArrangement: () => void;
-  backgroundColor: string;
-  onBackgroundColorChange: (color: string) => void;
-  brightness: number;
-  onBrightnessChange: (value: number[]) => void;
 };
 
 export function Controls({
   isLoading,
   onSuggestArrangement,
-  backgroundColor,
-  onBackgroundColorChange,
-  brightness,
-  onBrightnessChange,
 }: ControlsProps) {
   return (
     <div className="p-4 space-y-6">

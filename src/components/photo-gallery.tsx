@@ -57,8 +57,6 @@ const initialPhotos: Photo[] = photosData.map((p, i) => {
 
 export function PhotoGallery() {
   const [photos, setPhotos] = useState<Photo[]>(initialPhotos);
-  const [backgroundColor, setBackgroundColor] = useState("#222222");
-  const [brightness, setBrightness] = useState(1);
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
   const [focusedPhoto, setFocusedPhoto] = useState<Photo | null>(null);
@@ -122,8 +120,6 @@ export function PhotoGallery() {
         <div className="relative w-full h-screen bg-background">
           <PhotoVerse
             photos={photos}
-            backgroundColor={backgroundColor}
-            brightness={brightness}
             onPhotoClick={(photo) => setFocusedPhoto(photo === focusedPhoto ? null : photo)}
             focusedPhoto={focusedPhoto}
           />

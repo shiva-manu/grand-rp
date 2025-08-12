@@ -7,16 +7,12 @@ import type { Photo } from "@/types";
 
 type PhotoVerseProps = {
   photos: Photo[];
-  backgroundColor: string;
-  brightness: number;
   onPhotoClick: (photo: Photo) => void;
   focusedPhoto: Photo | null;
 };
 
 export function PhotoVerse({
   photos,
-  backgroundColor,
-  brightness,
   onPhotoClick,
   focusedPhoto,
 }: PhotoVerseProps) {
@@ -26,6 +22,7 @@ export function PhotoVerse({
   const cameraRef = useRef<THREE.PerspectiveCamera>();
   const controlsRef = useRef<OrbitControls>();
   const photoMeshes = useRef<Map<string, THREE.Mesh>>(new Map());
+  const starFieldRef = useRef<THREE.Points>();
   const animationState = useRef({
     isFocusing: false,
     cameraTargetPos: new THREE.Vector3(),
@@ -45,8 +42,9 @@ export function PhotoVerse({
 
     const scene = new THREE.Scene();
     sceneRef.current = scene;
+    scene.background = new THREE.Color(0x000000);
 
-    const camera = new THREE.PerspectiveCamera(75, currentMount.clientWidth / currentMount.clientHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(75, currentMount.clientWidth / currentMount.clientHeight, 0.1, 2000);
     camera.position.z = 20;
     cameraRef.current = camera;
 
@@ -60,8 +58,23 @@ export function PhotoVerse({
     controls.enableDamping = true;
     controlsRef.current = controls;
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
     scene.add(ambientLight);
+
+    // Starfield
+    const starsGeometry = new THREE.BufferGeometry();
+    const starsVertices = [];
+    for (let i = 0; i < 15000; i++) {
+        const x = (Math.random() - 0.5) * 2000;
+        const y = (Math.random() - 0.5) * 2000;
+        const z = (Math.random() - 0.5) * 2000;
+        starsVertices.push(x, y, z);
+    }
+    starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
+    const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1.2, transparent: true });
+    const starField = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(starField);
+    starFieldRef.current = starField;
 
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
@@ -84,6 +97,11 @@ export function PhotoVerse({
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
       controls.update();
+
+      if(starFieldRef.current) {
+        starFieldRef.current.rotation.x += 0.0001;
+        starFieldRef.current.rotation.y += 0.0001;
+      }
       
       photosRef.current.forEach(photo => {
         const mesh = photoMeshes.current.get(photo.url);
@@ -126,14 +144,6 @@ export function PhotoVerse({
       }
     };
   }, []);
-
-  useEffect(() => {
-    if (sceneRef.current) {
-      sceneRef.current.background = new THREE.Color(backgroundColor);
-      const light = sceneRef.current.children.find(c => c.isAmbientLight) as THREE.AmbientLight;
-      if (light) light.intensity = brightness;
-    }
-  }, [backgroundColor, brightness]);
 
   useEffect(() => {
     const scene = sceneRef.current;
