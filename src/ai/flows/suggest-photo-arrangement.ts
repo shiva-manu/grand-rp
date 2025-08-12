@@ -3,6 +3,9 @@
 /**
  * @fileOverview AI flow to suggest an arrangement of photos in 3D space based on their features.
  *
+ * THIS FLOW IS DEPRECATED AND NOT IN USE.
+ * The photo arrangement logic has been moved to the client-side in PhotoGallery.
+ *
  * - suggestPhotoArrangement - A function that suggests photo arrangements.
  * - SuggestPhotoArrangementInput - The input type for the suggestPhotoArrangement function.
  * - SuggestPhotoArrangementOutput - The return type for the suggestPhotoArrangement function.
@@ -39,44 +42,6 @@ export type SuggestPhotoArrangementOutput = z.infer<
 export async function suggestPhotoArrangement(
   input: SuggestPhotoArrangementInput
 ): Promise<SuggestPhotoArrangementOutput> {
-  return suggestPhotoArrangementFlow(input);
+  console.log("suggestPhotoArrangement flow called, but is deprecated.");
+  return [];
 }
-
-const prompt = ai.definePrompt({
-  name: 'suggestPhotoArrangementPrompt',
-  input: {schema: SuggestPhotoArrangementInputSchema},
-  output: {schema: SuggestPhotoArrangementOutputSchema},
-  prompt: `You are an AI assistant that suggests arrangements of photos in a 3D space.
-
-You will receive a list of photo URLs and the dimensions of the 3D space.
-
-Based on the color palettes and aspect ratios of the photos, suggest an arrangement that is visually appealing and harmoniously organized.
-Consider avoiding overlapping photos, placing similar color palettes together and using the space dimensions effectively.
-
-Respond with a JSON array of objects, where each object represents a photo and its 3D coordinates, like so:
-
-{
-  "photoUrl": "<url>",
-  "x": <number>,
-  "y": <number>,
-  "z": <number>,
-  "rotationY": <optional number>
-}
-
-Input Photos: {{photoUrls}}
-Space Width: {{spaceWidth}}
-Space Height: {{spaceHeight}}
-Space Depth: {{spaceDepth}}`,
-});
-
-const suggestPhotoArrangementFlow = ai.defineFlow(
-  {
-    name: 'suggestPhotoArrangementFlow',
-    inputSchema: SuggestPhotoArrangementInputSchema,
-    outputSchema: SuggestPhotoArrangementOutputSchema,
-  },
-  async input => {
-    const {output} = await prompt(input);
-    return output!;
-  }
-);

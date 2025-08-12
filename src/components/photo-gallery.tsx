@@ -2,7 +2,6 @@
 
 import React, { useState, useTransition } from "react";
 import { PhotoVerse } from "@/components/photo-verse";
-import { getArrangementSuggestion } from "@/app/actions";
 import { useToast } from "@/hooks/use-toast";
 import type { Photo } from "@/types";
 import { Button } from "@/components/ui/button";
@@ -26,25 +25,26 @@ const photosData = [
   { url: 'https://placehold.co/800x600.png', 'data-ai-hint': "picnic blanket" },
 ];
 
-const getSphericalCoords = (index: number, total: number, radius: number) => {
-  const phi = Math.acos(-1 + (2 * index) / total);
-  const theta = Math.sqrt(total * Math.PI) * phi;
+const getGridCoords = (index: number, total: number) => {
+  const numColumns = 5;
+  const colWidth = 5.5;
+  const rowHeight = 5.5;
 
-  const x = radius * Math.cos(theta) * Math.sin(phi);
-  const y = radius * Math.sin(theta) * Math.sin(phi);
-  const z = radius * Math.cos(phi);
+  const numRows = Math.ceil(total / numColumns);
+  const row = Math.floor(index / numColumns);
+  const col = index % numColumns;
+
+  // Center the grid
+  const x = (col - (numColumns - 1) / 2) * colWidth;
+  const y = (-(row - (numRows - 1) / 2)) * rowHeight;
+  const z = 0;
   
   return { x, y, z };
 }
 
 const initialPhotos: Photo[] = photosData.map((p, i) => {
-  const radius = 10;
-  const { x, y, z } = getSphericalCoords(i, photosData.length, radius);
-  
-  // Orient the photo to face the center
-  const rotationY = Math.atan2(x, z);
-  
-  return { ...p, x, y, z, rotationY };
+  const { x, y, z } = getGridCoords(i, photosData.length);
+  return { ...p, x, y, z, rotationY: 0 };
 });
 
 
@@ -53,49 +53,6 @@ export function PhotoGallery() {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
   const [focusedPhoto, setFocusedPhoto] = useState<Photo | null>(null);
-
-  const handleSuggestArrangement = () => {
-    startTransition(async () => {
-      try {
-        const result = await getArrangementSuggestion({
-          photoUrls: photos.map((p) => p.url),
-          spaceWidth: 20,
-          spaceHeight: 20,
-          spaceDepth: 20,
-        });
-        if (result.error) {
-          toast({
-            title: "AI Arrangement Error",
-            description: result.error,
-            variant: "destructive",
-          });
-        } else if (result.data) {
-          const newPhotos = result.data.map((p, i) => {
-            const oldPhoto = photos.find(op => op.url === p.photoUrl) || photos[i];
-            return {
-              ...oldPhoto,
-              url: p.photoUrl,
-              x: p.x,
-              y: p.y,
-              z: p.z,
-              rotationY: p.rotationY ? (p.rotationY * Math.PI) / 180 : oldPhoto.rotationY,
-            }
-          });
-          setPhotos(newPhotos);
-          toast({
-            title: "AI Arrangement",
-            description: "A new photo arrangement has been applied.",
-          });
-        }
-      } catch (error) {
-        toast({
-          title: "Error",
-          description: "An unexpected error occurred while suggesting arrangement.",
-          variant: "destructive",
-        });
-      }
-    });
-  };
 
   return (
     <div className="relative w-full h-screen bg-background">
