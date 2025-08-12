@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
 const photosData = [
-  { url: 'https://i.imghippo.com/files/sXpm5509QA.jpg', 'data-ai-hint': "couple smiling" },
+  { url: 'https://ik.imagekit.io/pbk0y1kt4/New%20Folder/Screenshot_2025-08-06-02-43-29-10_389ebf390bfc3991306aed56e489afee.jpg?updatedAt=1754980285736.jpg', 'data-ai-hint': "love couple" },
   { url: 'https://placehold.co/600x401.png', 'data-ai-hint': "wedding rings" },
   { url: 'https://placehold.co/600x402.png', 'data-ai-hint': "heart shape" },
   { url: 'https://placehold.co/600x403.png', 'data-ai-hint': "love letter" },
