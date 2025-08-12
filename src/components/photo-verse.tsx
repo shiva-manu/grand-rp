@@ -23,6 +23,7 @@ export function PhotoVerse({
   const controlsRef = useRef<OrbitControls>();
   const photoMeshes = useRef<Map<string, THREE.Mesh>>(new Map());
   const starFieldRef = useRef<THREE.Points>();
+  const moonRef = useRef<THREE.Mesh>();
   const animationState = useRef({
     isFocusing: false,
     cameraTargetPos: new THREE.Vector3(),
@@ -65,6 +66,18 @@ export function PhotoVerse({
     directionalLight.position.set(5, 10, 7.5);
     scene.add(directionalLight);
 
+    // Moon
+    const moonGeometry = new THREE.SphereGeometry(4, 32, 32);
+    const moonMaterial = new THREE.MeshStandardMaterial({
+      color: 0xe0e0e0, 
+      emissive: 0x999999,
+      emissiveIntensity: 0.3,
+      metalness: 0.2,
+      roughness: 0.8,
+    });
+    const moon = new THREE.Mesh(moonGeometry, moonMaterial);
+    scene.add(moon);
+    moonRef.current = moon;
 
     // Starfield
     const starsGeometry = new THREE.BufferGeometry();
@@ -108,6 +121,10 @@ export function PhotoVerse({
         starFieldRef.current.rotation.y += 0.0001;
       }
       
+      if(moonRef.current) {
+        moonRef.current.rotation.y += 0.0005;
+      }
+
       photosRef.current.forEach(photo => {
         const mesh = photoMeshes.current.get(photo.url);
         if (mesh) {
