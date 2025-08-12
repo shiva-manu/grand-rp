@@ -20,9 +20,9 @@ const photosData = [
   { url: 'https://placehold.co/800x1000.png', 'data-ai-hint': "valentine gift" },
   { url: 'https://placehold.co/800x800.png', 'data-ai-hint': "cupid arrow" },
   { url: 'https://placehold.co/1200x600.png', 'data-ai-hint': "chocolate box" },
-  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "paris eiffel" },
-  { url: 'https://placehold.co/400x600.png', 'data-ai-hint': "beach walk" },
-  { url: 'https://placehold.co/800x600.png', 'data-ai-hint': "picnic blanket" },
+  { url: 'https://placehold.co/601x401.png', 'data-ai-hint': "paris eiffel" },
+  { url: 'https://placehold.co/401x601.png', 'data-ai-hint': "beach walk" },
+  { url: 'https://placehold.co/801x601.png', 'data-ai-hint': "picnic blanket" },
 ];
 
 const getCircleCoords = (index: number, total: number) => {
