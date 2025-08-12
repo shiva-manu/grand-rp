@@ -25,6 +25,8 @@ export function PhotoVerse({
   const photoMeshes = useRef<Map<string, THREE.Mesh>>(new Map());
   const starFieldRef = useRef<THREE.Points>();
   const moonRef = useRef<THREE.Mesh>();
+  const boyRef = useRef<THREE.Mesh>();
+  const girlRef = useRef<THREE.Mesh>();
   const animationState = useRef({
     isFocusing: false,
     cameraTargetPos: new THREE.Vector3(),
@@ -37,6 +39,35 @@ export function PhotoVerse({
   onPhotoClickRef.current = onPhotoClick;
   const photosRef = useRef(photos);
   photosRef.current = photos;
+
+  const createTextSprite = (text: string) => {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    if (!context) return new THREE.Sprite();
+    
+    const fontSize = 48;
+    context.font = `bold ${fontSize}px "Dancing Script", cursive`;
+    const textMetrics = context.measureText(text);
+    const textWidth = textMetrics.width;
+
+    canvas.width = textWidth + 20;
+    canvas.height = fontSize + 20;
+
+    context.font = `bold ${fontSize}px "Dancing Script", cursive`;
+    context.fillStyle = "rgba(255, 255, 255, 0.9)";
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText(text, canvas.width / 2, canvas.height / 2);
+    
+    const texture = new THREE.CanvasTexture(canvas);
+    const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true });
+    const sprite = new THREE.Sprite(spriteMaterial);
+
+    const aspect = canvas.width / canvas.height;
+    sprite.scale.set(aspect * 5, 5, 1);
+    
+    return sprite;
+  };
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -60,10 +91,10 @@ export function PhotoVerse({
     controls.enableDamping = true;
     controlsRef.current = controls;
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 2.5);
     scene.add(ambientLight);
     
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
     directionalLight.position.set(5, 10, 7.5);
     scene.add(directionalLight);
 
@@ -77,14 +108,36 @@ export function PhotoVerse({
       roughness: 0.8,
       emissive: 0xffffff,
       emissiveMap: moonTexture,
-      emissiveIntensity: 0.8
+      emissiveIntensity: 1.8
     });
     const moon = new THREE.Mesh(moonGeometry, moonMaterial);
     scene.add(moon);
     moonRef.current = moon;
 
-    const moonLight = new THREE.PointLight(0xffffff, 5.5, 300);
+    const moonLight = new THREE.PointLight(0xffffff, 10.5, 300);
     moon.add(moonLight);
+
+    // Boy - Shivamani Nika
+    const boyGeometry = new THREE.SphereGeometry(1.5, 32, 32);
+    const boyMaterial = new THREE.MeshStandardMaterial({ color: 0xaaaaff });
+    const boy = new THREE.Mesh(boyGeometry, boyMaterial);
+    boy.position.set(-30, 0, 0);
+    scene.add(boy);
+    boyRef.current = boy;
+    const boyName = createTextSprite("Shivamani Nika");
+    boyName.position.set(-30, 4, 0);
+    scene.add(boyName);
+
+    // Girl - Nova Nila
+    const girlGeometry = new THREE.SphereGeometry(1.5, 32, 32);
+    const girlMaterial = new THREE.MeshStandardMaterial({ color: 0xffaaaa });
+    const girl = new THREE.Mesh(girlGeometry, girlMaterial);
+    girl.position.set(30, 0, 0);
+    scene.add(girl);
+    girlRef.current = girl;
+    const girlName = createTextSprite("Nova Nila");
+    girlName.position.set(30, 4, 0);
+    scene.add(girlName);
 
 
     // Starfield
@@ -130,7 +183,12 @@ export function PhotoVerse({
       }
       
       if(moonRef.current) {
-        moonRef.current.rotation.y -= 0.0005;
+        moonRef.current.rotation.y += 0.0005;
+      }
+
+      if(boyRef.current && girlRef.current) {
+        boyRef.current.lookAt(girlRef.current.position);
+        girlRef.current.lookAt(boyRef.current.position);
       }
 
       photosRef.current.forEach(photo => {
