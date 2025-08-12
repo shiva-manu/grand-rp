@@ -42,8 +42,14 @@ const getCircleCoords = (index: number, total: number) => {
 
 export function PhotoGallery() {
   const initialPhotos: Photo[] = useMemo(() => {
-    return photosData.map((p, i) => {
-      const { x, y, z, rotationY } = getCircleCoords(i, photosData.length);
+    // Remove duplicates by URL
+    const uniquePhotosData = photosData.filter((photo, index, self) =>
+        index === self.findIndex((p) => (
+            p.url === photo.url
+        ))
+    );
+    return uniquePhotosData.map((p, i) => {
+      const { x, y, z, rotationY } = getCircleCoords(i, uniquePhotosData.length);
       return { ...p, x, y, z, rotationY, photoUrl: p.url };
     });
   }, []);
