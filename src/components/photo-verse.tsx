@@ -127,7 +127,7 @@ export function PhotoVerse({
     // Boy - Shivamani Nika
     gltfLoader.load('https://models.readyplayer.me/65823521b711756598586411.glb', (gltf) => {
         const model = gltf.scene;
-        model.position.set(-15, -4, 0);
+        model.position.set(-8, -4, 0);
         model.scale.set(2.5, 2.5, 2.5);
         scene.add(model);
         boyRef.current.model = model;
@@ -141,14 +141,14 @@ export function PhotoVerse({
         boyRef.current.mixer = mixer;
 
         const boyName = createTextSprite("Shivamani Nika");
-        boyName.position.set(-15, 6, 0);
+        boyName.position.set(-8, 6, 0);
         scene.add(boyName);
     });
     
     // Girl - Nova Nila
     gltfLoader.load('https://models.readyplayer.me/65823483b71175659858634c.glb', (gltf) => {
         const model = gltf.scene;
-        model.position.set(15, -4, 0);
+        model.position.set(8, -4, 0);
         model.scale.set(2.5, 2.5, 2.5);
         scene.add(model);
         girlRef.current.model = model;
@@ -162,7 +162,7 @@ export function PhotoVerse({
         girlRef.current.mixer = mixer;
         
         const girlName = createTextSprite("Nova Nila");
-        girlName.position.set(15, 6, 0);
+        girlName.position.set(8, 6, 0);
         scene.add(girlName);
     });
 
