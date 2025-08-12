@@ -118,25 +118,25 @@ export function PhotoVerse({
     moon.add(moonLight);
 
     // Boy - Shivamani Nika
-    const boyGeometry = new THREE.SphereGeometry(1.5, 32, 32);
+    const boyGeometry = new THREE.CapsuleGeometry(1.5, 4, 8, 16);
     const boyMaterial = new THREE.MeshStandardMaterial({ color: 0xaaaaff });
     const boy = new THREE.Mesh(boyGeometry, boyMaterial);
     boy.position.set(-30, 0, 0);
     scene.add(boy);
     boyRef.current = boy;
     const boyName = createTextSprite("Shivamani Nika");
-    boyName.position.set(-30, 4, 0);
+    boyName.position.set(-30, 6, 0);
     scene.add(boyName);
 
     // Girl - Nova Nila
-    const girlGeometry = new THREE.SphereGeometry(1.5, 32, 32);
+    const girlGeometry = new THREE.CapsuleGeometry(1.5, 4, 8, 16);
     const girlMaterial = new THREE.MeshStandardMaterial({ color: 0xffaaaa });
     const girl = new THREE.Mesh(girlGeometry, girlMaterial);
     girl.position.set(30, 0, 0);
     scene.add(girl);
     girlRef.current = girl;
     const girlName = createTextSprite("Nova Nila");
-    girlName.position.set(30, 4, 0);
+    girlName.position.set(30, 6, 0);
     scene.add(girlName);
 
 
