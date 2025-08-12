@@ -60,10 +60,10 @@ export function PhotoVerse({
     controls.enableDamping = true;
     controlsRef.current = controls;
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
     scene.add(ambientLight);
     
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.2);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
     directionalLight.position.set(5, 10, 7.5);
     scene.add(directionalLight);
 
@@ -83,7 +83,7 @@ export function PhotoVerse({
     scene.add(moon);
     moonRef.current = moon;
 
-    const moonLight = new THREE.PointLight(0xffffff, 3.5, 200);
+    const moonLight = new THREE.PointLight(0xffffff, 5.5, 300);
     moon.add(moonLight);
 
 
