@@ -1,3 +1,9 @@
+import { PhotoGallery } from "@/components/photo-gallery";
+
 export default function Home() {
-  return <></>;
+  return (
+    <main>
+      <PhotoGallery />
+    </main>
+  );
 }
