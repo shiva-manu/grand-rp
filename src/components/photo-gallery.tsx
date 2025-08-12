@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
 const photosData = [
-  { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "couple smiling" },
+  { url: 'https://i.imghippo.com/files/sXpm5509QA.jpg', 'data-ai-hint': "couple smiling" },
   { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "wedding rings" },
   { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "heart shape" },
   { url: 'https://placehold.co/600x400.png', 'data-ai-hint': "love letter" },
